@@ -5,10 +5,35 @@ import { Footer } from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import styles from '@/styles/Home.module.css';
 import shoe from '../public/shoe.svg';
+import {HomePage} from '../components/Home'
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+export async function getServerSideProps() {
+    let recents = await prisma.articles.findMany({
+        where: {
+            published: true,
+        },
+        orderBy: {
+            created_at: 'asc'
+        },
+        take: 3
+      })
+    return {
+      props: {
+        recents: JSON.parse(JSON.stringify(recents, (key, value) =>
+        typeof value === 'bigint'
+            ? value.toString()
+            : value // return everything else unchanged
+    )),
+      }
+    };
+  }
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Home() {
+export default function Home(recents=[]) {
   return (
     <>
       <Head>
@@ -19,7 +44,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <Image src={shoe} />
-        aijuieagyi
+        <HomePage recents={recents}/>
       </main>
     </>
   );
