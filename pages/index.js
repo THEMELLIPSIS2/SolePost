@@ -1,8 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from '@next/font/google';
-import { Footer } from '@/components/Footer';
-import Navbar from '@/components/Navbar';
 import styles from '@/styles/Home.module.css';
 import shoe from '../public/shoe.svg';
 import {HomePage} from '../components/Home'
@@ -43,7 +41,7 @@ export default function Home(recents=[]) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Image src={shoe} />
+        <Image src={shoe} alt='shoe' />
         <HomePage recents={recents}/>
       </main>
     </>
