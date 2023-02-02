@@ -112,15 +112,15 @@ async function seedDb() {
 
 async function main() {
 
-  const genTags = tags.map((tag) => {
-    return {
-      name: tag
-    };
-  });
-  await prisma.tags.createMany({
-    data: genTags,
-    skipDuplicates: true
-  });
+  // const genTags = tags.map((tag) => {
+  //   return {
+  //     name: tag
+  //   };
+  // });
+  // await prisma.tags.createMany({
+  //   data: genTags,
+  //   skipDuplicates: true
+  // });
 
   createData(30);
   await seedDb();
