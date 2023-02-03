@@ -19,11 +19,30 @@ const tags = [
   'Funny',
   'Event',
   'Release',
-  'Rumor'
+  'Rumor',
+  'Collabs',
+  'Retro'
 ];
 
 const users = [];
 const articles = [];
+
+function mostlyTrue(){
+  let num = Math.floor(Math.random() * 10) + 1
+  if(num < 8){
+    return false
+  } else {
+    return true
+  }
+}
+function mostlyFalse(){
+  let num = Math.floor(Math.random() * 10) + 1
+  if(num < 8){
+    return true
+  } else {
+    return false
+  }
+}
 
 function pickTags(num = 2) {
   let assigned = [];
@@ -38,6 +57,7 @@ function pickTags(num = 2) {
   return assigned;
 }
 
+
 function createData(num) {
   let x = 0;
 
@@ -45,11 +65,15 @@ function createData(num) {
     const user = {
       email: faker.internet.email(),
       name: faker.name.fullName(),
+      user_type: faker.helpers.arrayElement(['admin', 'editor', 'contributor']),
       articles: {
         create: {
           title: faker.lorem.words(5),
           content: faker.lorem.paragraphs(5, '\n'),
-          published: true,
+          category: faker.helpers.arrayElement(['article', 'interview', 'editorial']),
+          published: mostlyTrue(),
+          featured: mostlyFalse(),
+          release_date: mostlyFalse() ? faker.date.between('2020-01-01T00:00:00.000Z', '2030-01-01T00:00:00.000Z') : null,
           article_tag: {
             create: {
               tags: {
@@ -87,8 +111,6 @@ async function seedDb() {
 }
 
 async function main() {
-  createData(30);
-  await seedDb();
 
   // const genTags = tags.map((tag) => {
   //   return {
@@ -99,6 +121,9 @@ async function main() {
   //   data: genTags,
   //   skipDuplicates: true
   // });
+
+  createData(30);
+  await seedDb();
 }
 
 main()
