@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import  prisma  from "@/prisma/prismaClient";
+import prisma from '@/prisma/prismaClient';
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
@@ -21,7 +21,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function Article(props) {
-  console.log(props.article);
   const router = useRouter();
   const { id } = router.query;
 
