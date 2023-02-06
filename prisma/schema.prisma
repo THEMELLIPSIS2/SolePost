@@ -27,7 +27,6 @@ model articles {
   featured     Boolean       @default(false)
   author_id    String?
   image_url    String        @default("https://enchfgsdvmmdvdjvdisy.supabase.co/storage/v1/object/public/article/thumbnails/shoeholder.jpg")
-
   article_tag  article_tag[]
   user         user?         @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -74,32 +73,6 @@ model user {
   account       account[]
   articles      articles[]
   session       session[]
-}
-
-model account {
-  id                String  @id
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-  user              user    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-model session {
-  id           String   @id
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model verification_token {
