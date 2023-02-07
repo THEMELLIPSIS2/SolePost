@@ -6,19 +6,18 @@ import { CacheProvider } from '@emotion/react';
 import { Footer } from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { SessionContextProvider } from '@supabase/auth-helpers-react';
+import { SessionProvider } from 'next-auth/react';
 import { useState } from 'react';
 
 const clientSideEmotionCache = createEmotionCache();
 
-function App({ Component, emotionCache = clientSideEmotionCache, pageProps }) {
-  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
-
+function App({
+  Component,
+  emotionCache = clientSideEmotionCache,
+  pageProps: { session, ...pageProps }
+}) {
   return (
-    <SessionContextProvider
-      supabaseClient={supabaseClient}
-      initialSession={pageProps.initialSession}
-    >
+    <SessionProvider session={session}>
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={theme}>
           <Navbar />
@@ -26,7 +25,7 @@ function App({ Component, emotionCache = clientSideEmotionCache, pageProps }) {
           <Footer />
         </ThemeProvider>
       </CacheProvider>
-    </SessionContextProvider>
+    </SessionProvider>
   );
 }
 export default App;
