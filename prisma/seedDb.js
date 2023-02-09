@@ -27,20 +27,20 @@ const tags = [
 const users = [];
 const articles = [];
 
-function mostlyTrue(){
-  let num = Math.floor(Math.random() * 10) + 1
-  if(num < 8){
-    return false
+function mostlyTrue() {
+  let num = Math.floor(Math.random() * 10) + 1;
+  if (num < 8) {
+    return false;
   } else {
-    return true
+    return true;
   }
 }
-function mostlyFalse(){
-  let num = Math.floor(Math.random() * 10) + 1
-  if(num < 8){
-    return true
+function mostlyFalse() {
+  let num = Math.floor(Math.random() * 10) + 1;
+  if (num < 8) {
+    return true;
   } else {
-    return false
+    return false;
   }
 }
 
@@ -57,7 +57,6 @@ function pickTags(num = 2) {
   return assigned;
 }
 
-
 function createData(num) {
   let x = 0;
 
@@ -70,10 +69,19 @@ function createData(num) {
         create: {
           title: faker.lorem.words(5),
           content: faker.lorem.paragraphs(5, '\n'),
-          category: faker.helpers.arrayElement(['article', 'interview', 'editorial']),
+          category: faker.helpers.arrayElement([
+            'article',
+            'interview',
+            'editorial'
+          ]),
           published: mostlyTrue(),
           featured: mostlyFalse(),
-          release_date: mostlyFalse() ? faker.date.between('2020-01-01T00:00:00.000Z', '2030-01-01T00:00:00.000Z') : null,
+          release_date: mostlyFalse()
+            ? faker.date.between(
+                '2020-01-01T00:00:00.000Z',
+                '2030-01-01T00:00:00.000Z'
+              )
+            : null,
           article_tag: {
             create: {
               tags: {
@@ -111,16 +119,15 @@ async function seedDb() {
 }
 
 async function main() {
-
-  // const genTags = tags.map((tag) => {
-  //   return {
-  //     name: tag
-  //   };
-  // });
-  // await prisma.tags.createMany({
-  //   data: genTags,
-  //   skipDuplicates: true
-  // });
+  const genTags = tags.map((tag) => {
+    return {
+      name: tag
+    };
+  });
+  await prisma.tags.createMany({
+    data: genTags,
+    skipDuplicates: true
+  });
 
   createData(30);
   await seedDb();
