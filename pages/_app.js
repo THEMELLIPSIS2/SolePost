@@ -11,6 +11,7 @@ import { useState } from 'react';
 
 const clientSideEmotionCache = createEmotionCache();
 
+
 function App({
   Component,
   emotionCache = clientSideEmotionCache,
@@ -18,6 +19,7 @@ function App({
 }) {
   return (
     <SessionProvider session={session}>
+
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={theme}>
           <Navbar />
@@ -26,6 +28,7 @@ function App({
         </ThemeProvider>
       </CacheProvider>
     </SessionProvider>
+
   );
 }
 export default App;
