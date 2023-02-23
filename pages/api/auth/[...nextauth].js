@@ -9,7 +9,14 @@ export default NextAuth({
   // Configure one or more authentication providers
   providers: [
     EmailProvider({
-      server: `smtp://${process.env.SMTP_USER}:${process.env.SMTP_PASSWORD}@${process.env.SMTP_HOST}:${process.env.SMTP_PORT}`,
+      server: {
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASSWORD
+        }
+      },
       from: process.env.SMTP_FROM
     })
     // ...add more providers here
